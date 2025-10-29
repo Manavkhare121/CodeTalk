@@ -10,4 +10,6 @@ router.post('/login',body('email').isEmail().withMessage('Email must be a valid 
 
 router.get('/profile',authMiddleware.authUser,userController.profileController)
 
+router.get('/logout',authMiddleware.authUser,userController.logoutController)
+
 export default router;
