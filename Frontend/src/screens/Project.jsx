@@ -178,6 +178,7 @@ const Project = () => {
         {/* SIDE PANEL */}
          <div className={`side-panel ${isSidePanelOpen ? "open" : ""}`}>
            <header>
+            
              <h1>Collaborators</h1>
              <button onClick={() => setIsSidePanelOpen(false)}>
                <i className="ri-close-fill"></i>
