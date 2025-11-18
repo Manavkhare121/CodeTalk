@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { UserContext } from "../context/user.context";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "../config/axios";
-// import { initializeSocket, receiveMessage, sendMessage } from "../config/socket";
+import { initializeSocket,recieveMessage,sendMessage } from "../config/socket.js";
 // import Markdown from "markdown-to-jsx";
 // import hljs from "highlight.js";
 // import { getWebContainer } from "../config/webcontainer";
@@ -24,22 +24,21 @@ import "../styles/Project.css";
 const Project = () => {
   const location = useLocation();
   const { user } = useContext(UserContext);
-
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(new Set());
   const [project, setProject] = useState(location.state.project);
-//   const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("");
   const [users, setUsers] = useState([]);
-//   const [messages, setMessages] = useState([]);
-//   const [fileTree, setFileTree] = useState({});
-//   const [currentFile, setCurrentFile] = useState(null);
-//   const [openFiles, setOpenFiles] = useState([]);
-//   const [webContainer, setWebContainer] = useState(null);
-//   const [iframeUrl, setIframeUrl] = useState(null);
-//   const [runProcess, setRunProcess] = useState(null);
+    const [messages, setMessages] = useState([]);
+  //   const [fileTree, setFileTree] = useState({});
+  //   const [currentFile, setCurrentFile] = useState(null);
+  //   const [openFiles, setOpenFiles] = useState([]);
+  //   const [webContainer, setWebContainer] = useState(null);
+  //   const [iframeUrl, setIframeUrl] = useState(null);
+  //   const [runProcess, setRunProcess] = useState(null);
 
-//   const messageBox = useRef(null);
+    const messageBox = useRef(null);
 
   const handleUserClick = (id) => {
     setSelectedUserId((prevSelected) => {
@@ -62,90 +61,78 @@ const Project = () => {
       .catch((err) => console.log(err));
   };
   console.log({
-  projectId: project._id,
-  users: Array.from(selectedUserId),
-});
+    projectId: project._id,
+    users: Array.from(selectedUserId),
+  });
 
-//   const send = () => {
-//     sendMessage("project-message", {
-//       message,
-//       sender: user,
-//     });
-//     setMessages((prev) => [...prev, { sender: user, message }]);
-//     setMessage("");
-//   };
+    const send = () => {
+      sendMessage("project-message", {
+        message,
+        sender: user,
+      });
+      // setMessages((prev) => [...prev, { sender: user, message }]);
+      setMessage("");
+    };
 
-//   const WriteAiMessage = (message) => {
-//     const msg = JSON.parse(message);
-//     return (
-//       <div className="ai-message">
-//         <Markdown
-//           children={msg.text}
-//           options={{
-//             overrides: { code: SyntaxHighlightedCode },
-//           }}
-//         />
-//       </div>
-//     );
-//   };
+  //   const WriteAiMessage = (message) => {
+  //     const msg = JSON.parse(message);
+  //     return (
+  //       <div className="ai-message">
+  //         <Markdown
+  //           children={msg.text}
+  //           options={{
+  //             overrides: { code: SyntaxHighlightedCode },
+  //           }}
+  //         />
+  //       </div>
+  //     );
+  //   };
 
   useEffect(() => {
-//     initializeSocket(project._id);
-//     if (!webContainer) {
-//       getWebContainer().then((container) => {
-//         setWebContainer(container);
-//         console.log("WebContainer started");
-//       });
-//     }
+    initializeSocket(project._id);
+    recieveMessage("project-message", (data) => {
+      console.log(data);
+    });
 
-//     receiveMessage("project-message", (data) => {
-//       console.log(data);
-
-//       if (data.sender._id === "ai") {
-//         const message = JSON.parse(data.message);
-//         webContainer?.mount(message.fileTree);
-//         if (message.fileTree) setFileTree(message.fileTree || {});
-//         setMessages((prev) => [...prev, data]);
-//       } else {
-//         setMessages((prev) => [...prev, data]);
-//       }
-//     });
-
-    // axios
-    //   .get(`/projects/get-project/${location.state.project._id}`)
-    //   .then((res) => {
-    //     setProject(res.data.project);
-    //     setFileTree(res.data.project.fileTree || {});
-    //   });
-
+    axios
+      .get(`/projects/get-project/${location.state.project._id}`)
+      .then((res) => {
+        console.log(res.data.project);
+      });
     axios
       .get("/users/all")
       .then((res) => setUsers(res.data.users))
       .catch((err) => console.log(err));
   }, []);
 
-//   const saveFileTree = (ft) => {
-//     axios
-//       .put("/projects/update-file-tree", {
-//         projectId: project._id,
-//         fileTree: ft,
-//       })
-//       .then((res) => console.log(res.data))
-//       .catch((err) => console.log(err));
-//   };
+  //   const saveFileTree = (ft) => {
+  //     axios
+  //       .put("/projects/update-file-tree", {
+  //         projectId: project._id,
+  //         fileTree: ft,
+  //       })
+  //       .then((res) => console.log(res.data))
+  //       .catch((err) => console.log(err));
+  //   };
 
   return (
     <main className="project-main">
       <section className="left-panel">
         <header className="left-header">
-          <button onClick={() => setIsModalOpen(true)} className="add-collab-btn">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="add-collab-btn"
+          >
             <i className="ri-add-fill"></i> Add collaborator
           </button>
-          <button onClick={() => setIsSidePanelOpen(!isSidePanelOpen)} className="toggle-btn">
+          <button
+            onClick={() => setIsSidePanelOpen(!isSidePanelOpen)}
+            className="toggle-btn"
+          >
             <i className="ri-group-fill"></i>
           </button>
         </header>
-        {/* <div className="conversation-area">
+        <div className="conversation-area">
           <div ref={messageBox} className="message-box">
             {messages.map((msg, i) => (
               <div
@@ -160,9 +147,9 @@ const Project = () => {
                 </div>
               </div>
             ))}
-          </div> */}
+          </div>
 
-          {/* <div className="input-field">
+        <div className="input-field">
             <input
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -173,17 +160,16 @@ const Project = () => {
               <i className="ri-send-plane-fill"></i>
             </button>
           </div>
-        </div> */}
+        </div>
 
         {/* SIDE PANEL */}
-         <div className={`side-panel ${isSidePanelOpen ? "open" : ""}`}>
-           <header>
-            
-             <h1>Collaborators</h1>
-             <button onClick={() => setIsSidePanelOpen(false)}>
-               <i className="ri-close-fill"></i>
-             </button>
-           </header>
+        <div className={`side-panel ${isSidePanelOpen ? "open" : ""}`}>
+          <header>
+            <h1>Collaborators</h1>
+            <button onClick={() => setIsSidePanelOpen(false)}>
+              <i className="ri-close-fill"></i>
+            </button>
+          </header>
 
           <div className="users-list">
             {project.users &&
@@ -216,8 +202,8 @@ const Project = () => {
           ))}
         </div> */}
 
-        {/* CODE EDITOR */}
-        {/* <div className="editor">
+      {/* CODE EDITOR */}
+      {/* <div className="editor">
           <div className="open-files">
             {openFiles.map((file, i) => (
               <button
@@ -255,7 +241,7 @@ const Project = () => {
             Run
           </button> */}
 
-          {/* <div className="code-area">
+      {/* <div className="code-area">
             {fileTree[currentFile] && (
               <pre className="hljs">
                 <code
@@ -284,7 +270,7 @@ const Project = () => {
         </div>
 
         {/* PREVIEW IFRAME */}
-        {/* {iframeUrl && (
+      {/* {iframeUrl && (
           <div className="preview">
             <input
               value={iframeUrl}
@@ -294,7 +280,7 @@ const Project = () => {
             <iframe src={iframeUrl}></iframe>
           </div>
         )}
-      </section> */} 
+      </section> */}
 
       {/* ADD COLLABORATOR MODAL */}
       {isModalOpen && (
