@@ -40,6 +40,7 @@ io.on('connection', socket => {
   console.log("a User Connected")
   socket.join(socket.project._id)
   socket.on('project-message',data=>{
+    console.log(data)
     socket.broadcast.to(socket.project._id).emit('project-message',data)
   })
   socket.on('event', data => { /* … */ });
