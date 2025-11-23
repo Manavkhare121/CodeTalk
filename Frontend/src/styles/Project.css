@@ -21,6 +21,8 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: none;
 }
 
 /* -------------------- LEFT HEADER -------------------- */
@@ -68,6 +70,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  
   overflow: hidden;
 }
 
@@ -80,6 +83,11 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  overflow: auto;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;             
 }
 
 /* CHAT BUBBLES */

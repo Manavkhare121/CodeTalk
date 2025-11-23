@@ -66,14 +66,19 @@ const Project = () => {
   });
 
     const send = () => {
-      sendMessage("project-message", {
-        message,
-        // sender:user,
-      });
-      // setMessages((prev) => [...prev, { sender: user, message }]);
+      if (!user?._id) return;  
+
+  sendMessage("project-message", {
+    message,
+    sender: { _id: user._id, email: user.email },
+  });
+      setMessages((prev) => [...prev, { sender: user, message }]);
       setMessage("");
     };
 
+    const scrolltobottom=()=>{
+  messageBox.current.scrollTop=messageBox.current.scrollHeight
+}
   //   const WriteAiMessage = (message) => {
   //     const msg = JSON.parse(message);
   //     return (
@@ -89,22 +94,28 @@ const Project = () => {
   //   };
 
   useEffect(() => {
-    initializeSocket(project._id);
-    recieveMessage("project-message", (data) => {
-      console.log(data);
-      setMessages(prev => [...prev, data]);
-    });
+     const socket = initializeSocket(project._id);
 
-    axios
-      .get(`/projects/get-project/${location.state.project._id}`)
-      .then((res) => {
-        console.log(res.data.project);
-      });
-    axios
-      .get("/users/all")
-      .then((res) => setUsers(res.data.users))
-      .catch((err) => console.log(err));
+  recieveMessage("project-message", (data) => {
+    setMessages((prev) => [...prev, data]);
+  });
+
+  axios.get(`/projects/get-project/${project._id}`).then((res) => {
+    setProject(res.data.project);
+  });
+
+  axios.get("/users/all").then((res) => {
+    setUsers(res.data.users);
+  });
+
+  return () => {
+    socket.off("project-message");
+  };
   }, []);
+
+  useEffect(() => {
+  scrolltobottom();
+}, [messages]);
 
   //   const saveFileTree = (ft) => {
   //     axios
@@ -134,7 +145,7 @@ const Project = () => {
           </button>
         </header>
         <div className="conversation-area">
-          <div ref={messageBox} className="message-box">
+          <div ref={messageBox} className="message-box hide-scrollbar">
             {messages.map((msg, i) => (
               <div
                 key={i}
