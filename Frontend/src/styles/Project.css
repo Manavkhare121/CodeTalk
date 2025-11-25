@@ -13,7 +13,7 @@
 
 .left-panel {
   position: relative;
-  width: 300px;
+  width: 350px;
   background: #151520;
   color: white;
   min-height: 100vh;
@@ -90,9 +90,11 @@
   display: none;             
 }
 
+
+
 /* CHAT BUBBLES */
 .message {
-  max-width: 80%;
+  max-width: 100%;
   padding: 10px 14px;
   border-radius: 10px;
   line-height: 1.4;
@@ -327,4 +329,64 @@
 
 .add-btn:hover {
   background: #1e40af;
+}
+
+
+/* -------------------- AI MESSAGE BUBBLE FIX -------------------- */
+
+.ai-bubble {
+  background: #1f2937 ;
+  color: #f8fafc ;
+  align-self: flex-start;
+  border-radius: 10px;
+  border-bottom-left-radius: 0;
+  padding: 12px 10px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* AI message content scroll container */
+.ai-message {
+  max-height: 480px;       /* Set the scrollable height */
+  overflow-y: auto;
+  overflow-x: auto;
+  padding: 8px;
+  background: #111827;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Hide scrollbar inside AI message */
+.ai-message::-webkit-scrollbar {
+  display: none;
+}
+
+.ai-message {
+  scrollbar-width: none;
+}
+
+/* Code block styling inside AI messages */
+.ai-message pre,
+.ai-message code {
+  background: #0e1525 !important;
+  padding: 8px;
+  border-radius: 6px;
+  display: block;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Hide scrollbar for code blocks too */
+.ai-message pre::-webkit-scrollbar,
+.ai-message code::-webkit-scrollbar {
+  display: none;
+}
+
+.ai-message pre,
+.ai-message code {
+  scrollbar-width: none;
 }

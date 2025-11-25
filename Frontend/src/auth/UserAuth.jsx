@@ -8,13 +8,20 @@ const UserAuth = ({ children }) => {
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!token) {
-            navigate('/login');
-        } else {
-            setLoading(false);
+   useEffect(() => {
+        if (user) {
+            setLoading(false)
         }
-    }, []);
+
+        if (!token) {
+            navigate('/login')
+        }
+
+        if (!user) {
+            navigate('/login')
+        }
+
+    }, [])
 
     if (loading) {
         return <div>Loading...</div>;

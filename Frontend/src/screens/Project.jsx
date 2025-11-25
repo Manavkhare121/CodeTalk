@@ -3,23 +3,23 @@ import { UserContext } from "../context/user.context";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "../config/axios";
 import { initializeSocket,recieveMessage,sendMessage } from "../config/socket.js";
-// import Markdown from "markdown-to-jsx";
+import Markdown from "markdown-to-jsx";
 // import hljs from "highlight.js";
 // import { getWebContainer } from "../config/webcontainer";
 import "../styles/Project.css";
 
-// function SyntaxHighlightedCode(props) {
-//   const ref = useRef(null);
+function SyntaxHighlightedCode(props) {
+  const ref = useRef(null);
 
-//   useEffect(() => {
-//     if (ref.current && props.className?.includes("lang-") && window.hljs) {
-//       window.hljs.highlightElement(ref.current);
-//       ref.current.removeAttribute("data-highlighted");
-//     }
-//   }, [props.className, props.children]);
+  useEffect(() => {
+    if (ref.current && props.className?.includes("lang-") && window.hljs) {
+      window.hljs.highlightElement(ref.current);
+      ref.current.removeAttribute("data-highlighted");
+    }
+  }, [props.className, props.children]);
 
-//   return <code {...props} ref={ref} />;
-// }
+  return <code {...props} ref={ref} />;
+}
 
 const Project = () => {
   const location = useLocation();
@@ -79,20 +79,26 @@ const Project = () => {
     const scrolltobottom=()=>{
   messageBox.current.scrollTop=messageBox.current.scrollHeight
 }
-  //   const WriteAiMessage = (message) => {
-  //     const msg = JSON.parse(message);
-  //     return (
-  //       <div className="ai-message">
-  //         <Markdown
-  //           children={msg.text}
-  //           options={{
-  //             overrides: { code: SyntaxHighlightedCode },
-  //           }}
-  //         />
-  //       </div>
-  //     );
-  //   };
+ const WriteAiMessage = (message) => {
+  let msg;
 
+  try {
+    msg = JSON.parse(message);
+  } catch {
+    msg = { text: message };
+  }
+
+  return (
+    <div className="ai-message">
+      <Markdown
+        children={msg.text}
+        options={{
+          overrides: { code: SyntaxHighlightedCode },
+        }}
+      />
+    </div>
+  );
+};
   useEffect(() => {
      const socket = initializeSocket(project._id);
 
@@ -155,7 +161,7 @@ const Project = () => {
               >
                 <small>{msg.sender.email}</small>
                 <div>
-                  {msg.sender._id === "ai" ? WriteAiMessage(msg.message) : <p>{msg.message}</p>}
+                  {msg.sender._id === "ai" ? WriteAiMessage(msg.message): <p>{msg.message}</p>}
                 </div>
               </div>
             ))}
@@ -184,8 +190,8 @@ const Project = () => {
           </header>
 
           <div className="users-list">
-            {project.users &&
-              project.users.map((usr) => (
+            {users &&
+              users.map((usr) => (
                 <div key={usr._id} className="user">
                   <div className="user-icon">
                     <i className="ri-user-fill"></i>
