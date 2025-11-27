@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { UserContext } from "../context/user.context";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, data } from "react-router-dom";
 import axios from "../config/axios";
 import { initializeSocket,recieveMessage,sendMessage } from "../config/socket.js";
 import Markdown from "markdown-to-jsx";
-// import hljs from "highlight.js";
+import hljs from "highlight.js";
 // import { getWebContainer } from "../config/webcontainer";
 import "../styles/Project.css";
 
@@ -31,7 +31,9 @@ const Project = () => {
     const [message, setMessage] = useState("");
   const [users, setUsers] = useState([]);
     const [messages, setMessages] = useState([]);
-    const [fileTree, setFileTree] = useState({});
+    const [fileTree, setFileTree] = useState({"index.js": { file: { contents: "console.log('hello')" } },
+  "app.js": { file: { contents: "function App() {}" } }
+});
     const [currentFile, setCurrentFile] = useState(null);
     const [openFiles, setOpenFiles] = useState([]);
   //   const [webContainer, setWebContainer] = useState(null);
@@ -101,8 +103,11 @@ const Project = () => {
 };
   useEffect(() => {
      const socket = initializeSocket(project._id);
-
+    
   recieveMessage("project-message", (data) => {
+    if (data.fileTree) {
+  setFileTree(data.fileTree);
+}
     setMessages((prev) => [...prev, data]);
   });
 
@@ -122,6 +127,8 @@ const Project = () => {
   useEffect(() => {
   scrolltobottom();
 }, [messages]);
+
+
 
   //   const saveFileTree = (ft) => {
   //     axios
@@ -259,7 +266,7 @@ const Project = () => {
             Run
           </button>  */}
 
-       {/* <div className="code-area">
+       <div className="code-area">
             {fileTree[currentFile] && (
               <pre className="hljs">
                 <code
@@ -273,7 +280,7 @@ const Project = () => {
                       [currentFile]: { file: { contents: updated } },
                     };
                     setFileTree(updatedFT);
-                    saveFileTree(updatedFT);
+                    // saveFileTree(updatedFT);
                   }}
                   dangerouslySetInnerHTML={{
                     __html: hljs.highlight(
@@ -284,11 +291,11 @@ const Project = () => {
                 />
               </pre>
             )}
-          </div> */}
+          </div>
         </div>
 
         {/* PREVIEW IFRAME */}
-       {iframeUrl && (
+       {/* {iframeUrl && (
           <div className="preview">
             <input
               value={iframeUrl}
@@ -297,7 +304,7 @@ const Project = () => {
             />
             <iframe src={iframeUrl}></iframe>
           </div>
-        )} 
+        )}  */}
        
        </section>
 

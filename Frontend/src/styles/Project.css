@@ -354,10 +354,8 @@
   padding: 8px;
   background: #111827;
   border-radius: 8px;
-  width: 100%;
+  width: 100%;  
   box-sizing: border-box;
-  white-space: pre-wrap;
-  word-break: break-word;
 }
 
 /* Hide scrollbar inside AI message */
@@ -390,3 +388,64 @@
 .ai-message code {
   scrollbar-width: none;
 }
+
+.right-panel {
+  flex: 1;
+  background: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.explorer {
+  background: #e2e8f0;
+  padding: 8px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.explorer button {
+  background: white;
+  border: 1px solid #cbd5e1;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.open-files {
+  display: flex;
+  gap: 8px;
+  background: #cbd5e1;
+  padding: 8px;
+}
+
+.open-files button {
+  border: none;
+  background: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.open-files button.active {
+  background: #2563eb;
+  color: white;
+}
+
+.code-area {
+  flex: 1;
+  overflow: auto;
+  background: #1e1e2f;
+  padding: 10px;
+  border-radius: 6px;
+}
+
