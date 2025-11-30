@@ -12,6 +12,10 @@ const ProjectSchema=new Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     }]
+    ,fileTree:{
+        type:Object,
+        default:{}
+    }
 },{
     timestamps:true
 })

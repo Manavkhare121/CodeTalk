@@ -440,7 +440,7 @@
 
 .open-files button.active {
   background: #2563eb;
-  color: white;
+  color: black;
 }
 
 .code-area {
@@ -451,3 +451,155 @@
   border-radius: 6px;
 }
 
+ /* =================== RIGHT PANEL LAYOUT =================== */
+
+.right-panel {
+  flex: 1;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 180px auto;
+  background: #dce2eb; 
+  overflow: hidden;
+}
+
+/* =================== FILE EXPLORER =================== */
+
+.explorer {
+  background: #d1d6df;  /* same light tone as screenshot */
+  padding: 14px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-right: 1px solid #c2c7d0;
+  overflow-y: auto;
+}
+
+.explorer button {
+  background: transparent;
+  border: none;
+  padding: 6px 4px;
+  text-align: left;
+  width: 100%;
+  font-size: 13px;
+  cursor: pointer;
+  color: #222;
+  border-radius: 4px;
+  transition: 0.15s;
+}
+
+.explorer button:hover {
+  background: #b9bec8;
+}
+
+.explorer button.active {
+  background: #2563eb;
+  color: white;
+}
+
+/* =================== MAIN EDITING AREA =================== */
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* =================== TOP TAB BAR =================== */
+
+.open-files {
+  display: flex;
+  background: #cdd3dd;
+  padding: 6px 10px;
+  gap: 8px;
+  border-bottom: 1px solid #b7bcc5;
+}
+
+.open-files button {
+  padding: 6px 10px;
+  font-size: 13px;
+  border: none;
+  background: #eceff3;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.open-files button.active {
+  background: white;
+  font-weight: 600;
+  border-bottom: 2px solid #2563eb;
+}
+
+/* =================== CODE EDITOR =================== */
+
+.code-area {
+  flex: 1;
+  background: #1b1f2a; /* Dark editor background (screenshot) */
+  color: #f8fafc;
+  padding: 16px;
+  overflow: auto;
+  border-radius: 0 0 6px 6px;
+  font-size: 14px;
+}
+
+/* highlight.js overrides */
+.code-area pre,
+.code-area code {
+  background: transparent !important;
+  color: inherit;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 14px;
+  white-space: pre;
+}
+
+/* Scrollbar styling (matches screenshot) */
+.code-area::-webkit-scrollbar {
+  width: 8px;
+}
+.code-area::-webkit-scrollbar-thumb {
+  background: #3a4254;
+  border-radius: 4px;
+}
+
+/* =================== RUN BUTTON =================== */
+
+.run-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  padding: 6px 14px;
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 50;
+}
+
+.run-btn:hover {
+  background: #15803d;
+}
+
+/* =================== PREVIEW FRAME =================== */
+
+.preview {
+  background: white;
+  height: 40%;
+  border-top: 1px solid #b7bcc5;
+  display: flex;
+  flex-direction: column;
+}
+
+.preview iframe {
+  flex: 1;
+  border: none;
+}
+
+.address-bar {
+  padding: 8px;
+  border: none;
+  outline: none;
+  background: #e5eaf1;
+  font-size: 14px;
+}

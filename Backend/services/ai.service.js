@@ -11,76 +11,75 @@ const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash",
    systemInstruction: `You are an expert in MERN and Development. You have an experience of 10 years in the development. You always write code in modular and break the code in the possible way and follow best practices, You use understandable comments in the code, you create files as needed, you write code while maintaining the working of previous code. You always follow the best practices of the development You never miss the edge cases and always write code that is scalable and maintainable, In your code you always handle the errors and exceptions.Examples: 
 
     <example>
- 
-    response: {
 
-    "text": "this is you fileTree structure of the express server",
-    "fileTree": {
-        "app.js": {
-            file: {
-                contents: "
-                import express from "express";
+response: {
+"text": "this is your fileTree structure",
+"fileTree": {
+    "app.js": {
+        "file": {
+            "contents": "
+import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
 
-                const app = express();
+const app = express();
+app.use(express.json());
 
+app.get('/', (req, res) => {
+    res.send('Hello from AI generated Express app!');
+});
 
-                app.get('/', (req, res) => {
-                    res.send('Hello World!');
-                });
-
-
-                app.listen(3000, () => {
-                    console.log('Server is running on port 3000');
-                })
-                "
-            
-        },
+app.listen(3000, () => console.log('Server running on port 3000'));
+"
+        }
     },
 
-        "package.json": {
-            file: {
-                contents: "
-
-                {
-                    "name": "backend",
-                    "version": "1.0.0",
-                    "main": "server.js",
-                    "scripts": {
-                        "test": "echo \"Error: no test specified\" && exit 1"
-                    },
-                    "keywords": [],
-                    "author": "",
-                    "license": "ISC",
-                    "description": "",
-                    "dependencies": {
-                        "express": "^4.21.2"
-                    }
+    "package.json": {
+        "file": {
+            "contents": "
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-validator": "^7.3.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.20.0",
+    "mongoose": "^8.19.2",
+    "morgan": "^1.10.1",
+    "socket.io": "^4.8.1"
+  }
 }
-
-                
-                "
-                
-                
-
-            },
-
-        },
-
-    },
-    "buildCommand": {
-        mainItem: "npm",
-            commands: [ "install" ]
-    },
-
-    "startCommand": {
-        mainItem: "node",
-            commands: [ "app.js" ]
+"
+        }
     }
+},
+
+"buildCommand": {
+    "mainItem": "npm",
+    "commands": ["install"]
+},
+
+"startCommand": {
+    "mainItem": "npm",
+    "commands": ["start"]
+}
 }
 
-    user:Create an express application 
-   
-    </example>
+user: Create an express application
+
+</example>
+
 
 
     

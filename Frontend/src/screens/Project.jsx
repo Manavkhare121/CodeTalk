@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { UserContext } from "../context/user.context";
 import { useNavigate, useLocation, data } from "react-router-dom";
-import axios from "../config/axios";
+import axios from "../config/axios.js";
 import { initializeSocket,recieveMessage,sendMessage } from "../config/socket.js";
 import Markdown from "markdown-to-jsx";
 import hljs from "highlight.js";
@@ -36,7 +36,7 @@ const Project = () => {
     const [openFiles, setOpenFiles] = useState([]);
     const [webContainer, setWebContainer] = useState(null);
     const [iframeUrl, setIframeUrl] = useState(null);
-  //   const [runProcess, setRunProcess] = useState(null);
+    const [runProcess, setRunProcess] = useState(null);
 
     const messageBox = useRef(null);
 
@@ -137,15 +137,15 @@ const Project = () => {
 
 
 
-  //   const saveFileTree = (ft) => {
-  //     axios
-  //       .put("/projects/update-file-tree", {
-  //         projectId: project._id,
-  //         fileTree: ft,
-  //       })
-  //       .then((res) => console.log(res.data))
-  //       .catch((err) => console.log(err));
-  //   };
+    const saveFileTree = (ft) => {
+      axios
+        .put("/projects/update-file-tree", {
+          projectId: project._id,
+          fileTree: ft,
+        })
+        .then((res) => console.log(res.data))
+        .catch((err) => console.log(err));
+    };
 
   return (
     <main className="project-main">
@@ -287,7 +287,7 @@ const Project = () => {
                       [currentFile]: { file: { contents: updated } },
                     };
                     setFileTree(updatedFT);
-                    // saveFileTree(updatedFT);
+                    saveFileTree(updatedFT);
                   }}
                   dangerouslySetInnerHTML={{
                     __html: hljs.highlight(
