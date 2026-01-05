@@ -8,11 +8,17 @@ import cors from "cors"
 const app =express()
 app.use(cors({
   origin: ["http://localhost:5173",
-    "https://chat-app-2-e9ip.onrender.com"
+    "https://chat-app-2-e9ip.onrender.com",
+    "https://chat-app-1-5p5l.onrender.com"
   ],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
+app.use((req, res, next) => {
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+  next();
+});
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}));
