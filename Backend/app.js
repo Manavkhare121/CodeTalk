@@ -8,7 +8,7 @@ import cors from "cors"
 const app =express()
 app.use(cors({
   origin: ["http://localhost:5173",
-    
+    "https://chat-app-2-e9ip.onrender.com"
   ],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"]
